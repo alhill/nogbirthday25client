@@ -20,8 +20,9 @@ export const msgWrapper = style({
     justifyContent: "flex-end",
     gap: "1rem",
     minHeight: "calc(100vh - 6rem)",
+    height: "calc(100vh - 6rem)",
     flex: 1,
-    overflow: "auto"
+    overflowY: "auto"
 })
 
 export const inputBox = style({
@@ -42,7 +43,8 @@ export const inputBox = style({
         padding: "0.5rem",
         fontSize: "1.25rem",
         flex: 1,
-        border: "none"
+        border: "none",
+        borderRight: "1px solid black"
     },
     ".btn": {
         display: "flex",
@@ -51,7 +53,7 @@ export const inputBox = style({
         padding: "0.25rem 0.6rem 0.25rem 0.5rem",
         transition: "all 300ms",
         cursor: "pointer",
-        borderLeft: "1px solid black",
+       
         height: "100%",
         "&:hover": {
             transform: "scale(1.5)"

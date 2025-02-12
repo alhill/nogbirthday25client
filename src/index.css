@@ -14,5 +14,6 @@ body {
   min-height: calc(100vh - 4rem);
   background-color: lightpink;
   padding: 2rem 2rem 2rem 2rem;
-  overflow-x: hidden
+  overflow-x: hidden;
+  overflow-y: auto;
 }

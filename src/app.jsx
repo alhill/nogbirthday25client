@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'preact/hooks'
 import { container, msgWrapper, inputBox, msgRow, msgBox, hiddenBtn, secretModal, btnWrapper, btn } from './styles/styles.css.js'
 
 export function App() {
@@ -7,6 +7,7 @@ export function App() {
   const [msg, setMsg] = useState("")
   const [loading, setLoading] = useState(false)
   const [modal, setModal] = useState(false)
+  const msgWrapperRef = useRef(null)
 
   const sendMsg = async () => {
     setLoading(true)
@@ -31,9 +32,7 @@ export function App() {
 
   const resetConversation = async () => {
     try{
-      const res = await fetch(workerRoot + "/reset")
-      const json = await res.json()
-      console.log(json)
+      await fetch(workerRoot + "/reset")
       window.location.reload()
     } catch(err) {
       console.log(err)
@@ -56,13 +55,25 @@ export function App() {
     })()
   }, [])
 
+  useEffect(() => {
+    if (msgWrapperRef.current) {
+      const lastMessage = msgWrapperRef.current.lastChild;
+      if (lastMessage) {
+        lastMessage.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [conv])
+
   return (
     <div className={container}>
       <div 
         className={hiddenBtn}
         onClick={() => setModal(true)}
       >&nbsp;&nbsp;&nbsp;</div>
-      <div className={msgWrapper}>
+      <div 
+        className={msgWrapper} 
+        ref={msgWrapperRef}
+      >
         { conv.map((msg => {
           return (
             <div
