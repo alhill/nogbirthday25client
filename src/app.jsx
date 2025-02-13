@@ -10,7 +10,6 @@ export function App() {
   const msgWrapperRef = useRef(null)
 
   const sendMsg = async () => {
-    console.log(msg)
     setLoading(true)
     try{
       const res = await fetch(workerRoot + "/ai", {
