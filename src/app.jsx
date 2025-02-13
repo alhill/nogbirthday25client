@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'preact/hooks'
 import { container, msgWrapper, inputBox, msgRow, msgBox, hiddenBtn, secretModal, btnWrapper, btn } from './styles/styles.css.js'
 
 export function App() {
-  const workerRoot = "https://nogbirthday25.alvarogil37.workers.dev"
+  const workerRoot = import.meta.env.MODE === "development" ? "http://localhost:8787" : "https://nogbirthday25.alvarogil37.workers.dev"
   const [conv, setConv] = useState([])
   const [msg, setMsg] = useState("")
   const [loading, setLoading] = useState(false)
@@ -10,6 +10,7 @@ export function App() {
   const msgWrapperRef = useRef(null)
 
   const sendMsg = async () => {
+    console.log(msg)
     setLoading(true)
     try{
       const res = await fetch(workerRoot + "/ai", {
@@ -47,7 +48,7 @@ export function App() {
           headers: { "Content-Type": "application/json" }
         })
         const jsonStr = await res.json()
-        const parsedHistory = JSON.parse(jsonStr)
+        const parsedHistory = JSON.parse(jsonStr) || []
         setConv(parsedHistory)
       } catch(err) {
         console.error("Couldn't load chat history", err)
